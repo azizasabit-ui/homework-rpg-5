@@ -3,10 +3,12 @@ package com.narxoz.rpg.hero;
 public class HeroProfile {
     private final String name;
     private int health;
+    private final int maxHealth;
 
     public HeroProfile(String name, int health) {
         this.name = name;
         this.health = health;
+        this.maxHealth = health;
     }
 
     public String getName() {
@@ -16,14 +18,24 @@ public class HeroProfile {
     public int getHealth() {
         return health;
     }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
 
     public void takeDamage(int amount) {
-        // TODO: Decide how health should be reduced and clamped.
-        health -= amount;
+        health = Math.max(0, health - amount);
+    }
+    
+    public void heal(int amount) {
+        health = Math.min(maxHealth, health + amount);
     }
 
     public boolean isAlive() {
-        // TODO: Decide whether additional conditions belong here.
         return health > 0;
+    }
+    
+    public String getStatus() {
+        return name + " [HP: " + health + "/" + maxHealth + "]";
     }
 }
